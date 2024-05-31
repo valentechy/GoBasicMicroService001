@@ -7,6 +7,12 @@ import (
   "encoding/json"
 )
 
+type User struct {
+  Id        int `json:"id"`
+  Name      string `json:"name"`
+  LastName   string `json:"lastName"`
+}
+
 func main() {
   mux := http.NewServeMux()
 
@@ -16,7 +22,7 @@ func main() {
 }
 
 func helloWeb(w http.ResponseWriter, r *http.Request) {
-  name := r.PathValue("name")
+  //name := r.PathValue("name")
   w.Header().Set("Content-Type", "application/json")
   w.WriteHeader(http.StatusOK)
 
@@ -27,6 +33,7 @@ func helloWeb(w http.ResponseWriter, r *http.Request) {
     LastName: "Palacios",
   }
 
+  fmt.Println(user)
+
   json.NewEncoder(w).Encode(user)
-  fmt.Fprintf(w, "Hello %s\n", name)
 }
