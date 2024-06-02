@@ -13,12 +13,15 @@ type User struct {
   LastName   string `json:"lastName"`
 }
 
+type UsersList []User
+
 func main() {
   mux := http.NewServeMux()
 
   mux.HandleFunc("GET /hello/{name}", helloWeb)
 
-  log.Fatal(http.ListenAndServe(":8080", mux))
+  fmt.Println("Server running on port 8181")
+  log.Fatal(http.ListenAndServe(":8181", mux))
 }
 
 func helloWeb(w http.ResponseWriter, r *http.Request) {
@@ -27,13 +30,19 @@ func helloWeb(w http.ResponseWriter, r *http.Request) {
   w.WriteHeader(http.StatusOK)
 
   // Create basic user
-  user := &User {
+  user1 := User {
     Id: 1,
     Name: "Valentin",
     LastName: "Palacios",
   }
 
-  fmt.Println(user)
+  user2 := User {
+    Id: 2,
+    Name: "Juan",
+    LastName: "Perez",
+  }
 
-  json.NewEncoder(w).Encode(user)
+  userList := []User{user1, user2}
+
+  json.NewEncoder(w).Encode(&userList)
 }
