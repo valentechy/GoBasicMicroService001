@@ -13,7 +13,10 @@ type User struct {
   LastName   string `json:"lastName"`
 }
 
-type UsersList []User
+//type UsersList []User
+type UsersList struct {
+  Users []User `json:"users"`
+}
 
 func main() {
   mux := http.NewServeMux()
@@ -42,7 +45,8 @@ func helloWeb(w http.ResponseWriter, r *http.Request) {
     LastName: "Perez",
   }
 
-  userList := []User{user1, user2}
+  //userList := []User{user1, user2}
+  userList := UsersList{Users: []User{user1, user2}}
 
   json.NewEncoder(w).Encode(&userList)
 }
